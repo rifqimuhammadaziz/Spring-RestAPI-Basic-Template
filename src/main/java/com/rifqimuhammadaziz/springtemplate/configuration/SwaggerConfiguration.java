@@ -22,6 +22,7 @@ public class SwaggerConfiguration {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
+    // for spring security
     private ApiKey apiKey() {
         return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
     }
