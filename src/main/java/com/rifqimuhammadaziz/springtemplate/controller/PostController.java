@@ -1,5 +1,6 @@
 package com.rifqimuhammadaziz.springtemplate.controller;
 
+import com.rifqimuhammadaziz.springtemplate.model.entity.Post;
 import com.rifqimuhammadaziz.springtemplate.service.contract.PostService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j // logging
@@ -32,5 +30,12 @@ public class PostController {
     public ResponseEntity<?> getAllPosts() {
         log.info("Get All Posts");
         return ResponseEntity.ok(postService.findAll());
+    }
+
+    @Operation(summary = "Save Post", description = "API for save of post")
+    @RequestMapping(value = "/posts", method = RequestMethod.POST)
+    public ResponseEntity<?> savePost(@RequestBody Post post) {
+        log.info("Save Post");
+        return ResponseEntity.ok(postService.save(post));
     }
 }
