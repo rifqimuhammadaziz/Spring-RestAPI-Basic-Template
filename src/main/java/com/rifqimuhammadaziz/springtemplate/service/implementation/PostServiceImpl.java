@@ -8,8 +8,7 @@ import com.rifqimuhammadaziz.springtemplate.service.contract.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +19,8 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
 //    private Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
@@ -29,7 +30,7 @@ public class PostServiceImpl implements PostService {
         Post post = null;
 
         try {
-            log.info("ProductService::createPost execution started.");
+            log.info("ProductService::createPost execution started");
             post = modelMapper.map(postRequestDTO, Post.class);
             postRepository.save(post);
             log.debug("ProductService::createNewPost request parameters {}", post);
@@ -37,6 +38,7 @@ public class PostServiceImpl implements PostService {
             log.error("PostService::createPost failed to save, Exception Message {}", e.getMessage());
         }
 
+        log.info("ProductService::createPost execution done");
         return post;
     }
 
@@ -46,7 +48,7 @@ public class PostServiceImpl implements PostService {
         try {
             log.info("PostService:findAll execution started");
             posts = postRepository.findAll();
-            log.debug("PostService:findAll retrieving products from database {}", posts);
+            log.debug("PostService:findAll retrieving posts from database {}", posts);
         } catch (Exception e) {
             log.error("Exception occurred while retrieving posts from database, Exception message {}", e.getMessage());
         }
@@ -57,7 +59,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(Long id) {
-        return postRepository.findById(id).get();
+        Post post = null;
+        try {
+            log.info("PostService:findById execution started");
+            post = postRepository.findById(id).get();
+            log.debug("PostService:findById retrieving post from database {}", post);
+        } catch (Exception e) {
+            log.error("Exception occurred while retrieving single post from database, Exception message {}", e.getMessage());
+        }
+        return post;
     }
 
     @Override
@@ -71,7 +81,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deleteById(Long id) {
-        postRepository.deleteById(id);
+        try {
+            log.info("PostService:deleteById execution started");
+            postRepository.deleteById(id);
+            log.debug("PostService:deleteById delete post from database");
+        } catch (Exception e) {
+            log.error("Exception occurred while delete single post from database, Exception message {}", e.getMessage());
+        }
     }
 
     // Convert Entity to Request DTO

@@ -19,6 +19,7 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .authorizeRequests((authorize) -> authorize
                         .antMatchers(HttpMethod.GET, "/api/v1/**").permitAll() // controller
+                        .antMatchers(HttpMethod.POST, "/api/v1/**").permitAll()
                         .antMatchers("/v2/api-docs/**").permitAll() // swagger
                         .antMatchers("/swagger-ui/**").permitAll() // swagger
                         .antMatchers("/swagger-resources/**").permitAll() // swagger
