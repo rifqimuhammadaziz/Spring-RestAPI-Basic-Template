@@ -28,14 +28,14 @@ public class PostController {
     @Operation(summary = "Get All Posts", description = "API for get detail of all posts")
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public ResponseEntity<?> getAllPosts() {
-        log.info("Get All Posts");
+        log.info("PostController::getAllPosts OK");
         return ResponseEntity.ok(postService.findAll());
     }
 
     @Operation(summary = "Save Post", description = "API for save of post")
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
     public ResponseEntity<?> savePost(@RequestBody Post post) {
-        log.info("Save Post");
+        log.info("PostController::savePosts request id : {}", post.getId());
         return ResponseEntity.ok(postService.save(post));
     }
 }
